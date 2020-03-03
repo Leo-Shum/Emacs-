@@ -3,8 +3,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(blink-cursor-mode nil)
- '(c-basic-offset (quote set-from-style)))
+ '(c-basic-offset (quote set-from-style))
+ '(custom-enabled-themes nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -14,18 +19,18 @@
 
 (setq inhibit-compacting-font-caches t) ;; Chinese font bu hui ka
 
-;; ÏÔÊ¾ĞĞºÅ
+;; æ˜¾ç¤ºè¡Œå·
 (global-linum-mode 1)
 (setq linum-format "%d ")
 ;;
 
-;; CÓïÑÔ Ëõ½ø³¤¶ÈÉèÖÃÎª4
-(setq-default c-basic-offset 4
-                  tab-width 4
-                  indent-tabs-mode t)
+;; Cè¯­è¨€ ç¼©è¿›é•¿åº¦è®¾ç½®ä¸º4
+;; (setq-default c-basic-offset 4
+   ;;               tab-width 4
+   ;;               indent-tabs-mode t)
 ;;
 
-;; Ëõ½øºÍbacktab
+;; ç¼©è¿›å’Œbacktab
 (defun indent-region-custom(numSpaces)
     (progn 
         ; default to start and end of current line
@@ -73,3 +78,26 @@
 (global-set-key (kbd "<tab>") 'tab-region)
 ;;
 (put 'downcase-region 'disabled nil)
+
+;; å­—ä½“
+;; (set-default-font "Consolas")
+(set-default-font "JetBrains Mono")
+
+;; ä¸­æ–‡ä¹±ç ï¼Œä»€ä¹ˆä¹±ç å•Šï¼Œéƒ½ utf-8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Coding system
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+;; backwards compatibility as default-buffer-file-coding-system
+;; is deprecated in 23.2.
+(if (boundp 'buffer-file-coding-system)
+    (setq-default buffer-file-coding-system 'utf-8)
+  (setq default-buffer-file-coding-system 'utf-8))
+
+;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+
