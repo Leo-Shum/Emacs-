@@ -25,65 +25,25 @@
 ;; 显示行号
 (global-linum-mode 1)
 (setq linum-format "%d ")
-;;
 
 
 ;; C语言 缩进长度设置为4
-;; (setq-default c-basic-offset 4
-   ;;               tab-width 4
-   ;;               indent-tabs-mode t)
-;;
+;; 设锤子 用 cc-mode
 
 
-;; 缩进和backtab
-(defun indent-region-custom(numSpaces)
-    (progn 
-        ; default to start and end of current line
-        (setq regionStart (line-beginning-position))
-        (setq regionEnd (line-end-position))
-
-        ; if there's a selection, use that instead of the current line
-        (when (use-region-p)
-            (setq regionStart (region-beginning))
-            (setq regionEnd (region-end))
-        )
-
-        (save-excursion ; restore the position afterwards            
-            (goto-char regionStart) ; go to the start of region
-            (setq start (line-beginning-position)) ; save the start of the line
-            (goto-char regionEnd) ; go to the end of region
-            (setq end (line-end-position)) ; save the end of the line
-
-            (indent-rigidly start end numSpaces) ; indent between start and end
-            (setq deactivate-mark nil) ; restore the selected region
-        )
-    )
-)
-
-(defun untab-region (N)
-    (interactive "p")
-    (indent-region-custom -4)
-)
-
-(defun tab-region (N)
-    (interactive "p")
-    (if (active-minibuffer-window)
-        (minibuffer-complete)    ; tab is pressed in minibuffer window -> do completion
-    ; else
-    (if (string= (buffer-name) "*shell*")
-        (comint-dynamic-complete) ; in a shell, use tab completion
-    ; else
-    (if (use-region-p)    ; tab is pressed is any other buffer -> execute with space insertion
-        (indent-region-custom 4) ; region was selected, call indent-region
-        (insert "    ") ; else insert four spaces as expected
-    )))
-)
-
-(global-set-key (kbd "<backtab>") 'untab-region)
-(global-set-key (kbd "<tab>") 'tab-region)
-;;
-(put 'downcase-region 'disabled nil)
-
+;; backtab
+(global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
+(defun un-indent-by-removing-4-spaces ()
+  "remove 4 spaces from beginning of of line"
+  (interactive)
+  (save-excursion
+    (save-match-data
+      (beginning-of-line)
+      ;; get rid of tabs at beginning of line
+      (when (looking-at "^\\s-+")
+        (untabify (match-beginning 0) (match-end 0)))
+      (when (looking-at "^    ")
+        (replace-match "")))))
 
 ;; 字体
 ;; (set-default-font "Consolas")
@@ -91,7 +51,6 @@
 
 
 ;; 中文乱码，什么乱码啊，都 utf-8
-;; 参考
 ;; https://emacs-china.org/t/revert-buffer-with-coding-system-utf-8/9415
 ;; https://emacs-china.org/t/coding-system-utf-8-org/9429
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -111,12 +70,8 @@
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
-;; C/C++模式下 缩进4
-;; 未完成
-
-
 ;; 自动补全
-;; 参考 https://zhuanlan.zhihu.com/p/19935656
+;; https://zhuanlan.zhihu.com/p/19935656
 ;; 配置melpa Packages源
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -128,3 +83,8 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20170125.245/dict")
 (ac-config-default) 
+
+
+;; 关闭 welcome 界面
+;; https://blog.csdn.net/grey_csdn/article/details/79008464
+(setq inhibit-splash-screen t)
