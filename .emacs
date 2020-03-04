@@ -9,7 +9,8 @@
    ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(blink-cursor-mode nil)
  '(c-basic-offset (quote set-from-style))
- '(custom-enabled-themes nil))
+ '(custom-enabled-themes nil)
+ '(package-selected-packages (quote (auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -17,18 +18,22 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; ----------------------------------------------------------------
 (setq inhibit-compacting-font-caches t) ;; Chinese font bu hui ka
+
 
 ;; 显示行号
 (global-linum-mode 1)
 (setq linum-format "%d ")
 ;;
 
+
 ;; C语言 缩进长度设置为4
 ;; (setq-default c-basic-offset 4
    ;;               tab-width 4
    ;;               indent-tabs-mode t)
 ;;
+
 
 ;; 缩进和backtab
 (defun indent-region-custom(numSpaces)
@@ -79,11 +84,16 @@
 ;;
 (put 'downcase-region 'disabled nil)
 
+
 ;; 字体
 ;; (set-default-font "Consolas")
 (set-default-font "JetBrains Mono")
 
+
 ;; 中文乱码，什么乱码啊，都 utf-8
+;; 参考
+;; https://emacs-china.org/t/revert-buffer-with-coding-system-utf-8/9415
+;; https://emacs-china.org/t/coding-system-utf-8-org/9429
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Coding system
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -101,3 +111,20 @@
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
+;; C/C++模式下 缩进4
+;; 未完成
+
+
+;; 自动补全
+;; 参考 https://zhuanlan.zhihu.com/p/19935656
+;; 配置melpa Packages源
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
+;; 启用auto-complete插件功能
+(add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-20170125.245")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20170125.245/dict")
+(ac-config-default) 
