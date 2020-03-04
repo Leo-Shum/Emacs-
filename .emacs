@@ -27,11 +27,12 @@
 (setq linum-format "%d ")
 
 
-;; C语言 缩进长度设置为4
+;; C/C++ 缩进4
 ;; 设锤子 用 cc-mode
 
 
 ;; backtab
+;; https://stackoverflow.com/questions/23692879/emacs24-backtab-is-undefined-how-to-define-this-shortcut-key
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
 (defun un-indent-by-removing-4-spaces ()
   "remove 4 spaces from beginning of of line"
