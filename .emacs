@@ -89,3 +89,57 @@
 ;; 关闭 welcome 界面
 ;; https://blog.csdn.net/grey_csdn/article/details/79008464
 (setq inhibit-splash-screen t)
+
+
+;; ----------------------------------------------------------------
+
+;; 参考来自 https://oi-wiki.org/lang/editor/emacs/
+;;Tab显示长度4
+(setq-default default-tab-width 4)
+(setq-default tab-width 4)
+
+;;透明度
+(set-frame-parameter (selected-frame) 'alpha (list 90 90))
+(add-to-list 'default-frame-alist (cons 'alpha (list 90 90)))
+
+;;配色方案
+(setq default-frame-alist
+         '((vertical-scroll-bars)
+           (background-color . "grey32")
+           (foreground-color . "grey")
+           (cursor-color . "gold1")
+           (mouse-color . "gold1")
+           (tool-bar-lines . 0)
+           (menu-bar-lines . 1)
+           (scroll-bar-lines . 0)
+           (right-fringe)
+           (left-fringe)))
+
+(set-face-background 'highlight "gray5")
+(set-face-foreground 'region "cyan")
+(set-face-background 'region "blue")
+(set-face-foreground 'secondary-selection "skyblue")
+(set-face-background 'secondary-selection "darkblue")
+(set-cursor-color "wheat")
+(set-mouse-color "wheat")
+
+(custom-set-variables
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error]))
+ ;;关闭光标闪烁
+ '(blink-cursor-mode nil)
+(custom-set-faces)
+
+;;高亮
+(global-hl-line-mode 1);;高亮当前行
+(show-paren-mode t);;高亮匹配括号
+;;(global-font-lock-mode t);;语法高亮
+
+;;设置光标形状为竖线（默认为方块）
+(setq-default cursor-type 'bar)
+
+;;设置默认编码环境
+(set-language-environment "UTF-8")
+;;(set-default-coding-systems 'utf-8)
+
+;; ----------------------------------------------------------------
