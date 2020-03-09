@@ -142,4 +142,10 @@
 (set-language-environment "UTF-8")
 ;;(set-default-coding-systems 'utf-8)
 
+;;设置一键编译 只支持C++
+(defun compile-file ()(interactive)(compile (format "g++ -o %s %s -g -lm -Wall" (file-name-sans-extension (buffer-name))(buffer-name))))
+(global-set-key [f9] 'compile-file)
+;;;;设置编译快捷键（如果设置了一键编译不要与一键编译冲突）
+;;(global-set-key [f9] 'compile)
+
 ;; ----------------------------------------------------------------
