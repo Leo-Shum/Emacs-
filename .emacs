@@ -103,6 +103,7 @@
 (add-to-list 'default-frame-alist (cons 'alpha (list 90 90)))
 
 ;;配色方案
+#|
 (setq default-frame-alist
          '((vertical-scroll-bars)
            (background-color . "grey32")
@@ -129,6 +130,7 @@
  ;;关闭光标闪烁
  '(blink-cursor-mode nil)
 (custom-set-faces)
+|#
 
 ;;高亮
 (global-hl-line-mode 1);;高亮当前行
